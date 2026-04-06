@@ -14,20 +14,20 @@ export default function Home() {
     if (data) setSlips(data);
   };
 useEffect(() => {
-  fetchSlips();
-  
-  // Check if someone is already logged in when the page loads
-  supabase.auth.getSession().then(({ data: { session } }) => {
-    setUser(session?.user ?? null);
-  });
+    fetchSlips();
+    
+    // Check if someone is already logged in when the page loads
+    supabase.auth.getSession().then(({ data: { session } }) => {
+      setUser(session?.user ?? null);
+    });
 
-  // Listen for changes (like clicking login or logout)
-  const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
-    setUser(session?.user ?? null);
-  });
+    // Listen for changes (like clicking login or logout)
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
+      setUser(session?.user ?? null);
+    });
 
-  return () => subscription.unsubscribe();
-}, []);
+    return () => subscription.unsubscribe();
+  }, []);
 
   const handleAddSlip = async (e: React.FormEvent) => {
   e.preventDefault();
