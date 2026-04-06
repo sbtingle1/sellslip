@@ -89,9 +89,46 @@ export default function Home() {
 
   return (
     <main style={{ padding: '40px', maxWidth: '800px', margin: '0 auto', fontFamily: 'sans-serif', backgroundColor: '#f8fafc', minHeight: '100vh' }}>
-    <h1 className="text-4xl font-bold text-slate-900 tracking-tight">
-  Sell My Slip
-</h1>
+    <main className="min-h-screen bg-white">
+  {/* Simple Navigation Bar */}
+  <nav className="border-b border-slate-100 px-6 py-4">
+    <div className="max-w-7xl mx-auto flex justify-between items-center">
+      <span className="text-2xl font-bold text-blue-600 tracking-tight">SellMySlip</span>
+      <div className="space-x-6 text-sm font-medium text-slate-600">
+        <a href="#" className="hover:text-blue-600">Browse Slips</a>
+        <a href="#" className="hover:text-blue-600">List Your Slip</a>
+        <button className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition">
+          Sign In
+        </button>
+      </div>
+    </div>
+  </nav>
+
+  {/* Hero Header Section */}
+  <header className="py-20 px-6">
+    <div className="max-w-4xl mx-auto text-center">
+      <h1 className="text-6xl md:text-7xl font-extrabold text-slate-900 tracking-tight mb-6">
+        Find the perfect spot for <span className="text-blue-600">your boat.</span>
+      </h1>
+      <p className="text-xl text-slate-600 mb-10 leading-relaxed">
+        The premier marketplace to buy, sell, or rent boat slips. 
+        Secure your dockage in minutes, not months.
+      </p>
+      
+      {/* Quick Search Bar Placeholder */}
+      <div className="max-w-2xl mx-auto bg-white p-2 rounded-2xl shadow-2xl border border-slate-100 flex flex-col md:flex-row gap-2">
+        <input 
+          type="text" 
+          placeholder="Enter city, marina, or waterway..." 
+          className="flex-1 px-6 py-4 rounded-xl focus:outline-none text-slate-900"
+        />
+        <button className="bg-blue-600 text-white px-8 py-4 rounded-xl font-bold hover:bg-blue-700 transition shadow-lg shadow-blue-200">
+          Search Slips
+        </button>
+      </div>
+    </div>
+  </header>
+</main>
 <p className="text-lg text-slate-600">
   The easiest way to buy, sell, or rent boat slips.
 </p>
