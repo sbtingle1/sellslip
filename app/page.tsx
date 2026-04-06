@@ -89,9 +89,12 @@ export default function Home() {
 
   return (
     <main style={{ padding: '40px', maxWidth: '800px', margin: '0 auto', fontFamily: 'sans-serif', backgroundColor: '#f8fafc', minHeight: '100vh' }}>
-    <h1 className="bg-pink-500 text-white text-5xl p-10 text-center font-bold">
-  TAILWIND V4 IS LIVE
+    <h1 className="text-4xl font-bold text-slate-900 tracking-tight">
+  Sell My Slip
 </h1>
+<p className="text-lg text-slate-600">
+  The easiest way to buy, sell, or rent boat slips.
+</p>
 
       {/* --- AUTH HEADER --- */}
       <header style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '20px', padding: '15px', backgroundColor: '#fff', borderRadius: '12px', boxShadow: '0 1px 3px rgba(0,0,0,0.1)' }}>
