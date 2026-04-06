@@ -65,7 +65,27 @@ useEffect(() => {
 };
 <main style={{ padding: '40px', maxWidth: '1200px', margin: '0 auto', fontFamily: 'sans-serif', backgroundColor: '#f8fafc', minHeight: '100vh' }}>
   <h1 style={{ textAlign: 'center', color: '#0f172a', marginBottom: '40px', fontSize: '2.5rem' }}>SellMySlip.com</h1>
+<main style={{ padding: '40px', maxWidth: '1200px', margin: '0 auto', fontFamily: 'sans-serif', backgroundColor: '#f8fafc', minHeight: '100vh' }}>
+  <h1 style={{ textAlign: 'center', color: '#0f172a', marginBottom: '40px', fontSize: '2.5rem' }}>SellMySlip.com</h1>
 
+  {/* PASTE THIS HEADER HERE */}
+  <header style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '20px', padding: '15px', backgroundColor: '#fff', borderRadius: '12px', boxShadow: '0 1px 3px rgba(0,0,0,0.1)' }}>
+    <div style={{ fontSize: '14px', color: '#64748b' }}>
+      {user ? `Logged in as: ${user.email}` : "Not logged in"}
+    </div>
+    <div>
+      {!user ? (
+        <>
+          <button onClick={handleSignIn} style={{ marginRight: '10px', padding: '8px 16px', borderRadius: '6px', border: '1px solid #cbd5e1', cursor: 'pointer' }}>Sign In</button>
+          <button onClick={handleSignUp} style={{ padding: '8px 16px', borderRadius: '6px', border: 'none', backgroundColor: '#3b82f6', color: 'white', cursor: 'pointer' }}>Sign Up</button>
+        </>
+      ) : (
+        <button onClick={handleSignOut} style={{ padding: '8px 16px', borderRadius: '6px', border: '1px solid #ef4444', color: '#ef4444', cursor: 'pointer' }}>Sign Out</button>
+      )}
+    </div>
+  </header>
+
+  {/* Rest of your form and slip list... */}
   {/* PASTE THIS HEADER HERE */}
   <header style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '20px', padding: '15px', backgroundColor: '#fff', borderRadius: '12px', boxShadow: '0 1px 3px rgba(0,0,0,0.1)' }}>
     <div style={{ fontSize: '14px', color: '#64748b' }}>
