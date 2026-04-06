@@ -29,35 +29,40 @@ export default async function Page() {
             <div key={slip.id} className="bg-white rounded-2xl border border-slate-200 overflow-hidden hover:shadow-lg transition-all">
               
               {/* IMAGE SECTION */}
-              <div className="aspect-video bg-slate-100 relative flex items-center justify-center">
-                {slip.image_url ? (
-                  <img 
-                    src={slip.image_url} 
-                    alt={slip.name} 
-                    className="w-full h-full object-cover"
-                    onError={(e) => { e.currentTarget.src = ""; e.currentTarget.className = "hidden"; }}
-                  />
-                ) : null}
-                
-                {/* Fallback if no image or broken link */}
-                {(!slip.image_url) && (
-                  <div className="text-center p-4">
-                    <span className="text-4xl mb-2 block">🚤</span>
-                    <p className="text-xs font-bold text-slate-400 uppercase tracking-widest">No Photo Available</p>
-                  </div>
-                )}
+             {/* IMAGE SECTION - UPDATED */}
+<div className="aspect-video bg-slate-100 relative flex items-center justify-center overflow-hidden">
+  {slip.image_url && slip.image_url.trim().length > 0 ? (
+    <img 
+      src={slip.image_url} 
+      alt={slip.name} 
+      className="w-full h-full object-cover"
+      onError={(e) => {
+        // If the URL is broken, hide the image and show the fallback
+        e.currentTarget.style.display = 'none';
+        e.currentTarget.nextElementSibling?.classList.remove('hidden');
+      }}
+    />
+  ) : null}
+  
+  {/* The Fallback - This shows if image_url is null, empty, or fails to load */}
+  <div className={`text-center p-4 ${slip.image_url && slip.image_url.trim().length > 0 ? 'hidden' : ''}`}>
+    <div className="text-3xl mb-1 text-slate-300">⚓</div>
+    <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest leading-none">
+      Photo Coming Soon
+    </p>
+  </div>
 
-                {/* Status Badge (Available/Rented) */}
-                <div className="absolute top-3 left-3">
-                  <span className={`text-[10px] font-bold px-2 py-1 rounded-md uppercase tracking-wider ${
-                    String(slip.is_available).toLowerCase() === 'true' 
-                    ? 'bg-emerald-500 text-white' 
-                    : 'bg-slate-400 text-white'
-                  }`}>
-                    {String(slip.is_available).toLowerCase() === 'true' ? 'Available' : 'Unavailable'}
-                  </span>
-                </div>
-              </div>
+  {/* Status Badge */}
+  <div className="absolute top-3 left-3">
+    <span className={`text-[10px] font-bold px-2 py-1 rounded-md uppercase tracking-wider shadow-sm ${
+      String(slip.is_available).toLowerCase() === 'true' 
+      ? 'bg-emerald-500 text-white' 
+      : 'bg-slate-400 text-white'
+    }`}>
+      {String(slip.is_available).toLowerCase() === 'true' ? 'Available' : 'Unavailable'}
+    </span>
+  </div>
+</div>
               
               <div className="p-6">
                 <div className="flex justify-between items-start mb-2">
