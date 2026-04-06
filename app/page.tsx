@@ -18,20 +18,39 @@ export default function Home() {
   }, []);
 
   const handleAddSlip = async (e: React.FormEvent) => {
-    e.preventDefault();
-    const { error } = await supabase
-      .from('slips')
-      .insert([{ location, price: parseInt(price), description }]);
+  e.preventDefault();
 
-    if (error) {
-      alert(error.message);
-    } else {
-      setLocation('');
-      setPrice('');
-      setDescription('');
-      fetchSlips(); 
-    }
-  };
+  // 1. Get the current user from Supabase Auth
+  const { data: { user }, error: authError } = await supabase.auth.getUser();
+
+  // 2. Check if the user is logged in
+  if (!user || authError) {
+    alert("You must be logged in to post a listing.");
+    return;
+  }
+
+  // 3. Insert the data, including the user's unique ID as the owner_id
+  const { error } = await supabase
+    .from('slips')
+    .insert([
+      { 
+        location, 
+        price: parseInt(price), 
+        description,
+        owner_id: user.id // This matches the column we added to the DB
+      }
+    ]);
+
+  if (error) {
+    alert(error.message);
+  } else {
+    // 4. Clear form and refresh list on success
+    setLocation('');
+    setPrice('');
+    setDescription('');
+    fetchSlips();
+  }
+};
 
   return (
     <main style={{ padding: '40px', maxWidth: '800px', margin: '0 auto', fontFamily: 'sans-serif', backgroundColor: '#f8fafc', minHeight: '100vh' }}>
