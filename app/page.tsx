@@ -2,46 +2,56 @@ import { createClient } from '@/lib/supabase/server'
 
 export default async function Page() {
   const supabase = await createClient()
-  
-  // Fetching every single row from the table
   const { data: slips, error } = await supabase.from('slips').select('*')
 
+  if (error) return <div className="p-10 text-red-500">Database Error: {error.message}</div>
+
   return (
-    <main className="min-h-screen bg-slate-50 p-10 text-slate-900">
-      <h1 className="text-3xl font-black mb-8 text-blue-600">Inventory Status</h1>
-      
-      {error && <div className="p-4 bg-red-100 text-red-600 rounded-lg mb-4">{error.message}</div>}
+    <main className="min-h-screen bg-slate-50 p-6 md:p-12 text-slate-900">
+      <div className="max-w-5xl mx-auto">
+        <h1 className="text-4xl font-black mb-2 tracking-tight">Marketplace</h1>
+        <p className="text-slate-500 mb-10">Total Listings Found: {slips?.length || 0}</p>
 
-      <div className="grid gap-4">
-        {slips?.map((slip) => (
-          <div key={slip.id} className="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm flex justify-between items-center">
-            <div>
-              <h2 className="text-xl font-bold">{slip.name || 'Untitled Slip'}</h2>
-              <p className="text-slate-500 font-medium">{slip.location || 'No Location'}</p>
-              <p className="text-xs font-mono text-slate-400 mt-2">ID: {slip.id}</p>
-            </div>
-            
-            <div className="text-right">
-              <p className="text-2xl font-black text-slate-900">${slip.price}</p>
-              {/* DEBUG LABELS */}
-              <div className="flex gap-2 mt-2 justify-end">
-                <span className={`text-[10px] px-2 py-1 rounded font-bold ${slip.image_url ? 'bg-green-100 text-green-700' : 'bg-red-100 text-red-700'}`}>
-                  IMAGE: {slip.image_url ? 'YES' : 'NULL'}
-                </span>
-                <span className={`text-[10px] px-2 py-1 rounded font-bold ${slip.is_available ? 'bg-blue-100 text-blue-700' : 'bg-amber-100 text-amber-700'}`}>
-                  AVAIL: {String(slip.is_available).toUpperCase()}
-                </span>
+        <div className="grid gap-6">
+          {slips?.map((slip, index) => {
+            // Safety Check: If the row exists, we force it to show something
+            return (
+              <div key={slip.id || index} className="bg-white border border-slate-200 p-6 rounded-3xl shadow-sm flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+                <div className="flex-1">
+                  <div className="flex items-center gap-3 mb-2">
+                    <span className="bg-blue-600 text-white text-[10px] font-black px-2 py-1 rounded-md uppercase tracking-tighter">
+                      {slip.price > 2000 ? 'Sale' : 'Rent'}
+                    </span>
+                    <h2 className="text-2xl font-bold">{slip.name || 'Untitled Listing'}</h2>
+                  </div>
+                  <p className="text-slate-500 flex items-center gap-1">
+                    <span className="text-lg">📍</span> {slip.location || 'Location Not Provided'}
+                  </p>
+                </div>
+
+                <div className="text-left md:text-right min-w-[150px]">
+                  <p className="text-3xl font-black text-slate-900">
+                    ${slip.price ? Number(slip.price).toLocaleString() : '0'}
+                  </p>
+                  <p className="text-[10px] font-bold text-slate-400 uppercase mt-1">
+                    Status: {String(slip.is_available).toUpperCase()}
+                  </p>
+                </div>
+
+                <div className="w-20 h-20 bg-slate-100 rounded-2xl flex items-center justify-center text-2xl border border-slate-100">
+                  {slip.image_url ? '📸' : '⚓'}
+                </div>
               </div>
-            </div>
-          </div>
-        ))}
-      </div>
-
-      {slips?.length === 0 && (
-        <div className="p-10 border-2 border-dashed border-slate-300 rounded-3xl text-center text-slate-400">
-          No rows returned from database. Check RLS policies.
+            )
+          })}
         </div>
-      )}
+
+        {(!slips || slips.length === 0) && (
+          <div className="text-center p-20 border-4 border-dashed rounded-[40px] text-slate-300">
+            No data returned from Supabase.
+          </div>
+        )}
+      </div>
     </main>
   )
 }
