@@ -24,10 +24,21 @@ export default async function Page() {
                 ) : (
                   <div style={{ display: 'flex', height: '100%', alignItems: 'center', justifyContent: 'center', fontSize: '40px' }}>🚤</div>
                 )}
-                <div style={{ position: 'absolute', top: '15px', left: '15px', backgroundColor: slip.price > 2000 ? '#f97316' : '#10b981', color: 'white', padding: '4px 12px', borderRadius: '10px', fontSize: '10px', fontWeight: 'bold', textTransform: 'uppercase' }}>
-                  {slip.price > 2000 ? 'Sale' : 'Rent'}
-                </div>
-              </div>
+                {/* Updated Logic for Rent vs Sale */}
+<div style={{ 
+  position: 'absolute', 
+  top: '15px', 
+  left: '15px', 
+  backgroundColor: slip.price > 2000 ? '#f97316' : '#10b981', // Orange for Sale, Green for Rent
+  color: 'white', 
+  padding: '4px 12px', 
+  borderRadius: '10px', 
+  fontSize: '10px', 
+  fontWeight: 'bold', 
+  textTransform: 'uppercase' 
+}}>
+  {slip.price > 2000 ? 'For Sale' : 'For Rent'}
+</div>
 
               {/* Text Area */}
               <div style={{ padding: '25px' }}>
