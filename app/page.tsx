@@ -14,22 +14,27 @@ export default async function Page() {
         {slips?.map((slip) => (
           <div key={slip.id} className="bg-white border rounded-xl overflow-hidden shadow-sm">
             
-            {/* SIMPLIFIED IMAGE LOGIC */}
-            <div className="aspect-video bg-slate-200 flex items-center justify-center">
-              {slip.image_url && slip.image_url.startsWith('http') ? (
-                <img 
-                  src={slip.image_url} 
-                  alt="Boat Slip" 
-                  className="w-full h-full object-cover"
-                />
-              ) : (
-                <div className="text-center">
-                  <span className="text-4xl">⚓</span>
-                  <p className="text-slate-500 font-bold text-xs mt-2">NO IMAGE DATA</p>
-                  <p className="text-[10px] text-slate-400 font-mono">Value: {JSON.stringify(slip.image_url)}</p>
-                </div>
-              )}
-            </div>
+            {/* ULTRA-SAFE IMAGE SECTION */}
+<div className="aspect-video bg-slate-200 flex items-center justify-center relative">
+  {slip.image_url ? (
+    <img 
+      src={slip.image_url} 
+      alt="Boat Slip" 
+      className="w-full h-full object-cover"
+    />
+  ) : (
+    <div className="flex flex-col items-center">
+      <span className="text-4xl mb-2">⚓</span>
+      <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">
+        No Image Available
+      </p>
+      {/* This line below helps us see what is actually there */}
+      <p className="text-[8px] text-slate-300 mt-1">
+        Field is: {slip.image_url === null ? 'NULL' : 'EMPTY'}
+      </p>
+    </div>
+  )}
+</div>
 
             <div className="p-4">
               <div className="flex justify-between items-center">
