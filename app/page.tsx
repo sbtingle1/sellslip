@@ -76,6 +76,7 @@ export default function Home() {
         {slips.length > 0 ? (
           slips.map((slip) => (
            {slips.map((slip) => (
+  {slips.map((slip) => (
   <div key={slip.id} style={{ 
     padding: '20px', 
     border: '1px solid #e2e8f0', 
@@ -92,6 +93,7 @@ export default function Home() {
       ${slip.price}
     </p>
   </div>
+))}
 ))}
 ))}
           ))
