@@ -89,8 +89,8 @@ export default function Home() {
 
   return (
     <main style={{ padding: '40px', maxWidth: '800px', margin: '0 auto', fontFamily: 'sans-serif', backgroundColor: '#f8fafc', minHeight: '100vh' }}>
-    <h1 className="text-8xl font-black text-blue-600 bg-slate-100 p-20 text-center uppercase tracking-tighter">
-  V4 Active
+    <h1 className="bg-pink-500 text-white text-5xl p-10 text-center font-bold">
+  TAILWIND V4 IS LIVE
 </h1>
 
       {/* --- AUTH HEADER --- */}
