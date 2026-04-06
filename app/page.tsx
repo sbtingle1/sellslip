@@ -72,35 +72,27 @@ export default function Home() {
 
       {/* --- LISTINGS DISPLAY --- */}
       <h2 style={{ color: '#1e293b' }}>Current Listings</h2>
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(250px, 1fr))', gap: '20px' }}>
-        {slips.length > 0 ? (
-          slips.map((slip) => (
-           {slips.map((slip) => (
-  {slips.map((slip) => (
-  <div key={slip.id} style={{ 
-    padding: '20px', 
-    border: '1px solid #e2e8f0', 
-    borderRadius: '12px', 
-    boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1)',
-    backgroundColor: 'white',
-    color: '#1e293b' 
-  }}>
-    <span style={{ fontSize: '12px', color: '#3b82f6', fontWeight: 'bold', textTransform: 'uppercase' }}>
-      {slip.description || 'Listing'} 
-    </span>
-    <h3 style={{ margin: '10px 0', fontSize: '1.25rem', color: '#0f172a' }}>{slip.location}</h3>
-    <p style={{ fontSize: '1.5rem', fontWeight: 'bold', color: '#1e293b', margin: '0' }}>
-      ${slip.price}
-    </p>
-  </div>
-))}
-))}
-))}
-          ))
-        ) : (
-          <p>No slips found. Use the form above to add one!</p>
-        )}
+   <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(250px, 1fr))', gap: '20px' }}>
+  {slips.length > 0 ? (
+    slips.map((slip) => (
+      <div key={slip.id} style={{
+        padding: '20px', 
+        border: '1px solid #e2e8f0', 
+        borderRadius: '12px', 
+        boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1)', 
+        backgroundColor: 'white', 
+        color: '#1e293b' 
+      }}>
+        <span style={{ fontSize: '12px', color: '#3b82f6', fontWeight: 'bold', textTransform: 'uppercase' }}>
+          {slip.description || 'Listing'}
+        </span>
+        <h3 style={{ margin: '10px 0', fontSize: '1.25rem', color: '#0f172a' }}>{slip.location}</h3>
+        <p style={{ fontSize: '1.5rem', fontWeight: 'bold', color: '#1e293b', margin: '0' }}>
+          ${slip.price}
+        </p>
       </div>
-    </main>
-  );
-}
+    ))
+  ) : (
+    <p>No slips found. Use the form above to add one!</p>
+  )}
+</div>
