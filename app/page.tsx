@@ -4,6 +4,7 @@ import { supabase } from '../lib/supabaseClient';
 
 export default function Home() {
   const [slips, setSlips] = useState<any[]>([]);
+  const [user, setUser] = useState<any>(null);
   const [location, setLocation] = useState('');
   const [price, setPrice] = useState('');
   const [description, setDescription] = useState('');
