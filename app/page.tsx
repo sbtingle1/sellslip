@@ -5,91 +5,83 @@ export default async function Page() {
   const { data: slips, error } = await supabase.from('slips').select('*')
 
   return (
-    <main className="min-h-screen bg-slate-50 text-slate-900 font-sans">
-      {/* Navigation */}
-      <nav className="bg-white border-b border-slate-200 px-6 py-4 sticky top-0 z-10 shadow-sm">
+    <main className="min-h-screen bg-slate-50 text-slate-900">
+      <nav className="bg-white border-b border-slate-200 px-6 py-4 sticky top-0 z-10">
         <div className="max-w-7xl mx-auto flex justify-between items-center">
-          <span className="text-2xl font-black text-blue-600 tracking-tighter uppercase">SellMySlip</span>
-          <div className="flex items-center gap-4">
-            <span className="text-xs text-slate-400 font-mono hidden md:block">UID: {slips?.[0]?.user_id?.slice(0,8) || 'No User'}</span>
-            <button className="bg-blue-600 text-white px-5 py-2 rounded-full text-sm font-bold hover:bg-blue-700 transition shadow-lg shadow-blue-200">
-              + List Slip
-            </button>
-          </div>
+          <span className="text-2xl font-bold text-blue-600 tracking-tight">SellMySlip</span>
+          <button className="bg-blue-600 text-white px-4 py-2 rounded-lg font-medium hover:bg-blue-700 transition">
+            + List a Slip
+          </button>
         </div>
       </nav>
 
       <div className="max-w-7xl mx-auto p-6 md:p-10">
-        <header className="mb-12">
-          <h1 className="text-5xl font-extrabold tracking-tight text-slate-900 mb-3">
-            Explore <span className="text-blue-600">Dockage</span>
+        <header className="mb-10">
+          <h1 className="text-4xl font-extrabold tracking-tight text-slate-900">
+            Current <span className="text-blue-600">Listings</span>
           </h1>
-          <p className="text-slate-500 text-lg max-w-2xl">Find verified boat slips, docks, and moorings for your vessel.</p>
         </header>
 
-        {error && (
-          <div className="bg-red-50 border-l-4 border-red-500 text-red-700 p-4 rounded-r-xl mb-8 shadow-sm">
-            <p className="font-bold">Database Error</p>
-            <p className="text-sm">{error.message}</p>
-          </div>
-        )}
+        {error && <div className="bg-red-50 text-red-600 p-4 rounded-xl mb-8">{error.message}</div>}
 
-        {/* The Listings Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
-  {slips?.map((slip) => (
-    <div key={slip.id} className="bg-white rounded-3xl border border-slate-200 overflow-hidden shadow-sm">
-      {/* Image Section */}
-      <div className="aspect-[16/9] bg-slate-100 relative">
-        {slip.image_url ? (
-          <img 
-            src={slip.image_url} 
-            alt="Slip" 
-            className="w-full h-full object-cover"
-            onError={(e) => {
-              // If the URL is broken, show a message
-              e.currentTarget.style.display = 'none';
-              e.currentTarget.parentElement!.innerHTML = '<div class="p-4 text-xs text-red-400 text-center">Image URL failed to load</div>';
-            }}
-          />
-        ) : (
-          <div className="w-full h-full flex items-center justify-center text-slate-300 text-xs">
-            No image_url found
-          </div>
-        )}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          {slips?.map((slip) => (
+            <div key={slip.id} className="bg-white rounded-2xl border border-slate-200 overflow-hidden hover:shadow-lg transition-all">
+              
+              {/* IMAGE SECTION */}
+              <div className="aspect-video bg-slate-100 relative flex items-center justify-center">
+                {slip.image_url ? (
+                  <img 
+                    src={slip.image_url} 
+                    alt={slip.name} 
+                    className="w-full h-full object-cover"
+                    onError={(e) => { e.currentTarget.src = ""; e.currentTarget.className = "hidden"; }}
+                  />
+                ) : null}
+                
+                {/* Fallback if no image or broken link */}
+                {(!slip.image_url) && (
+                  <div className="text-center p-4">
+                    <span className="text-4xl mb-2 block">🚤</span>
+                    <p className="text-xs font-bold text-slate-400 uppercase tracking-widest">No Photo Available</p>
+                  </div>
+                )}
 
-        {/* Availability Badge */}
-        <div className="absolute top-4 left-4 px-3 py-1 rounded-full text-[10px] font-bold bg-white shadow-sm border border-slate-100">
-          {slip.is_available === true ? '✅ Available' : '❌ Not Available'}
-        </div>
-      </div>
-      
-      <div className="p-6">
-        <h3 className="text-xl font-bold mb-1">{slip.name || 'Untitled'}</h3>
-        <p className="text-blue-600 font-bold text-lg">${slip.price || '0'}</p>
-        
-        {/* --- DATA DEBUGGER (Remove this once it works) --- */}
-        <div className="mt-6 pt-4 border-t border-dashed border-slate-100">
-          <p className="text-[10px] font-black text-slate-300 uppercase mb-2">Database Debugger</p>
-          <ul className="text-[10px] font-mono text-slate-500 space-y-1">
-            <li><span className="text-slate-400">image_url:</span> {slip.image_url ? 'Has Value' : 'Empty'}</li>
-            <li><span className="text-slate-400">is_available:</span> {String(slip.is_available)}</li>
-            <li><span className="text-slate-400">user_id:</span> {slip.user_id ? 'Present' : 'Missing'}</li>
-          </ul>
-        </div>
-      </div>
-    </div>
-  ))}
-</div>
+                {/* Status Badge (Available/Rented) */}
+                <div className="absolute top-3 left-3">
+                  <span className={`text-[10px] font-bold px-2 py-1 rounded-md uppercase tracking-wider ${
+                    String(slip.is_available).toLowerCase() === 'true' 
+                    ? 'bg-emerald-500 text-white' 
+                    : 'bg-slate-400 text-white'
+                  }`}>
+                    {String(slip.is_available).toLowerCase() === 'true' ? 'Available' : 'Unavailable'}
+                  </span>
+                </div>
+              </div>
+              
+              <div className="p-6">
+                <div className="flex justify-between items-start mb-2">
+                  <h3 className="text-xl font-bold text-slate-900">{slip.name || 'Boat Slip'}</h3>
+                  <div className="text-right">
+                    <p className="text-xl font-black text-blue-600">${slip.price?.toLocaleString()}</p>
+                    <p className="text-[10px] text-slate-400 font-bold uppercase">
+                      {slip.price < 2000 ? 'per month' : 'total price'}
+                    </p>
+                  </div>
+                </div>
+                
+                <p className="text-slate-500 text-sm mb-6 flex items-center capitalize">
+                  <svg className="w-4 h-4 mr-1 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" /><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" /></svg>
+                  {slip.location || 'Florida'}
+                </p>
 
-        {(!slips || slips.length === 0) && (
-          <div className="text-center py-32 bg-white rounded-[40px] border-2 border-dashed border-slate-200">
-            <div className="bg-slate-50 w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-6">
-               <span className="text-4xl text-slate-300">⚓</span>
+                <button className="w-full bg-slate-900 text-white py-3 rounded-xl font-bold hover:bg-slate-800 transition">
+                  Details
+                </button>
+              </div>
             </div>
-            <h3 className="text-xl font-bold text-slate-900">No listings found</h3>
-            <p className="text-slate-400 mt-2">Start by adding your first boat slip to the database.</p>
-          </div>
-        )}
+          ))}
+        </div>
       </div>
     </main>
   )
