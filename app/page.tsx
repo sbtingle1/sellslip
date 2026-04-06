@@ -89,8 +89,8 @@ export default function Home() {
 
   return (
     <main style={{ padding: '40px', maxWidth: '800px', margin: '0 auto', fontFamily: 'sans-serif', backgroundColor: '#f8fafc', minHeight: '100vh' }}>
-      <h1 className="text-center text-6xl font-black text-blue-600 my-10 uppercase tracking-widest">
-  Sell My Slip
+     <h1 className="bg-blue-600 text-white text-center py-20 text-6xl font-black uppercase">
+  Tailwind is Active
 </h1>
 
       {/* --- AUTH HEADER --- */}
