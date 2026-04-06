@@ -89,7 +89,9 @@ export default function Home() {
 
   return (
     <main style={{ padding: '40px', maxWidth: '800px', margin: '0 auto', fontFamily: 'sans-serif', backgroundColor: '#f8fafc', minHeight: '100vh' }}>
-      <h1 style={{ textAlign: 'center', color: '#0f172a', marginBottom: '40px', fontSize: '2.5rem' }}>SellMySlip.com</h1>
+      <h1 className="text-center text-6xl font-black text-blue-600 my-10 uppercase tracking-widest">
+  Sell My Slip
+</h1>
 
       {/* --- AUTH HEADER --- */}
       <header style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '20px', padding: '15px', backgroundColor: '#fff', borderRadius: '12px', boxShadow: '0 1px 3px rgba(0,0,0,0.1)' }}>
