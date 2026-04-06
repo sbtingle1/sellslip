@@ -14,21 +14,22 @@ export default function Home() {
     if (data) setSlips(data);
   };
 useEffect(() => {
+    // 1. Keep your existing function to load the listings
     fetchSlips();
     
-    // Check if someone is already logged in when the page loads
+    // 2. Check if a user is already "remembered" by the browser
     supabase.auth.getSession().then(({ data: { session } }) => {
       setUser(session?.user ?? null);
     });
 
-    // Listen for changes (like clicking login or logout)
+    // 3. Set up a listener so the UI updates the moment a user logs in/out
     const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
       setUser(session?.user ?? null);
     });
 
+    // 4. Cleanup: stop listening when the component unmounts
     return () => subscription.unsubscribe();
   }, []);
-
   const handleAddSlip = async (e: React.FormEvent) => {
   e.preventDefault();
 
