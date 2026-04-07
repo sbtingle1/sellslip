@@ -1,5 +1,24 @@
 import { createClient } from '@/lib/supabase/server'
 
+interface Slip {
+  id: string;
+  name: string;
+  price: number;
+  location: string;
+  image_url?: string;
+}
+// ---------------------------
+
+export default async function Page() {
+  const supabase = await createClient()
+  
+  // Update this line to use the new "Slip" type
+  const { data: slips, error } = await supabase.from('slips').select('*') as { data: Slip[] | null, error: any }
+
+  if (error) return <div style={{ padding: '40px', color: 'red' }}>Error: {error.message}</div>
+  
+  // ... the rest of your return() code
+
 export default async function Page() {
   const supabase = await createClient()
   const { data: slips, error } = await supabase.from('slips').select('*')
