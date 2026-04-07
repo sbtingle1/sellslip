@@ -56,8 +56,8 @@ export default async function Page() {
               </div>
             </div>
           ))}
-     </div> {/* Closes listings grid */}
-      </div>   {/* Closes max-width container */}
-    </div>     {/* Closes main background div */}
+        </div>
+      </div>
+    </div>
   )
 }
