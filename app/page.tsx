@@ -11,8 +11,10 @@ interface Slip {
 export default async function Page() {
   const supabase = await createClient()
   
-  // Fetching data with the proper Type
-  const { data: slips, error } = await supabase.from('slips').select('*') as { data: Slip[] | null, error: any }
+    // Fetching data with clean, native Supabase typing
+  const { data: slips, error } = await supabase
+    .from<Slip>('slips')
+    .select('*')supabase.from('slips').select('*') as { data: Slip[] | null, error: any }
 
   if (error) {
     return <div style={{ padding: '40px', color: 'red' }}>Error: {error.message}</div>
